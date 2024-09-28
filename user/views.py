@@ -22,3 +22,7 @@ def logout_view(request):
     return redirect('Login')
 
 
+def profile(request):
+    return render(request,'user/profile.html')
+
+
