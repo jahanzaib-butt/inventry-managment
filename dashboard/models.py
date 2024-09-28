@@ -9,7 +9,7 @@ CATAGORY = (
 class Product(models.Model):
     name = models.CharField(max_length=200,null=True)
     category = models.CharField(max_length=200,choices=CATAGORY,null=True)  # Corrected spelling
-    quantity = models.PositiveIntegerField(max_length=200,null=True)  # Removed max_length
+    quantity = models.PositiveIntegerField(null=True)  # Removed max_length
 
     def __str__(self):
         return f'{self.name}-{self.quantity}'
