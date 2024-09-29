@@ -9,6 +9,9 @@ from django.contrib import messages
 def index(request):
     orders = Order.objects.all()
     products = Product.objects.all()
+    orders_count = orders.count()
+    product_count = products.count()
+    staff_count = User.objects.all().count()
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -21,14 +24,20 @@ def index(request):
     context = {
         'orders': orders,
         'products': products,
-        'form': form
+        'form': form,
+        'orders_count': orders_count,
+        'product_count': product_count,
+        'staff_count': staff_count
     }
     return render(request, 'Dashboard/index.html', context)
 
 @login_required(login_url='Login')
 def staff(request):
     staffs = User.objects.all()
-    context = {'staffs':staffs}
+    staff_count = staffs.count()
+    orders_count = Order.objects.all().count()
+    product_count = Product.objects.all().count()
+    context = {'staffs':staffs, 'staff_count':staff_count, 'orders_count':orders_count, 'product_count':product_count}
     return render(request,'Dashboard/staff.html',context)
 
 @login_required(login_url='Login')
@@ -40,6 +49,9 @@ def staff_details(request,pk):
 @login_required(login_url='Login')
 def product(request):
     products = Product.objects.all()
+    product_count = products.count()
+    orders_count = Order.objects.all().count()
+    staff_count = User.objects.all().count()
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
@@ -49,7 +61,10 @@ def product(request):
             return redirect('dashboard-product')
     else:
         form = ProductForm()
-    context = {'products':products, 'form':form}
+    context = {
+        'products':products, 'form':form, 'product_count':product_count,
+        'orders_count':orders_count, 'staff_count':staff_count
+        }
     return render(request,'Dashboard/product.html',context)
 
 @login_required(login_url='Login')
@@ -77,6 +92,11 @@ def product_update(request,pk):
 @login_required(login_url='Login')
 def order(request):
     orders = Order.objects.all()
-    context = {'orders':orders}
+    orders_count = orders.count()
+    product_count = Product.objects.all().count()
+    staff_count = User.objects.all().count()
+    context = {
+        'orders':orders, 'orders_count':orders_count, 'product_count':product_count,
+        'staff_count':staff_count
+        }
     return render(request,'Dashboard/order.html',context)
-
