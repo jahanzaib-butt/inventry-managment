@@ -6,6 +6,13 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
+            {% if messages %}
+                <div class="alert alert-success" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
             <div class="border bg-white p-3">
                 <h3>Register Page</h3>
                 <form method="POST">

@@ -4,9 +4,18 @@
 {% block content %}
 {% include 'partials/topside.html' %}
     <!--Table-->
+
+   
     <div class="container">
         <div class="row my-4">
             <div class="col-md-4">
+                {% if messages %}
+                    <div class="alert alert-success" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                        {% endif %}
                 <div class="border bg-white p-3">
                     <h4>Add Products</h4>
                     <hr>

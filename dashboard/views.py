@@ -1,15 +1,41 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Product
-from .forms import ProductForm
+from .models import Product,Order
+from .forms import ProductForm,OrderForm
+from django.contrib.auth.models import User
+from django.contrib import messages
 # Create your views here.
 @login_required(login_url='Login')
 def index(request):
-    return render(request,'Dashboard/index.html')
+    orders = Order.objects.all()
+    products = Product.objects.all()
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.staff = request.user
+            instance.save()
+            return redirect('dashboard-index')
+    else:
+        form = OrderForm()
+    context = {
+        'orders': orders,
+        'products': products,
+        'form': form
+    }
+    return render(request, 'Dashboard/index.html', context)
 
 @login_required(login_url='Login')
 def staff(request):
-    return render(request,'Dashboard/staff.html')
+    staffs = User.objects.all()
+    context = {'staffs':staffs}
+    return render(request,'Dashboard/staff.html',context)
+
+@login_required(login_url='Login')
+def staff_details(request,pk):
+    user = User.objects.get(id=pk)
+    context = {'user':user}
+    return render(request,'Dashboard/staff_details.html',context)
 
 @login_required(login_url='Login')
 def product(request):
@@ -18,6 +44,8 @@ def product(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
+            product_name = form.cleaned_data.get('name')
+            messages.success(request, f'{product_name} has been added')
             return redirect('dashboard-product')
     else:
         form = ProductForm()
@@ -48,5 +76,7 @@ def product_update(request,pk):
 
 @login_required(login_url='Login')
 def order(request):
-    return render(request,'Dashboard/order.html')
+    orders = Order.objects.all()
+    context = {'orders':orders}
+    return render(request,'Dashboard/order.html',context)
 

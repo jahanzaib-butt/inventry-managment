@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Profile
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib import messages
 @csrf_exempt
 def register(request):
     user = request.user
@@ -14,6 +14,8 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            user_name = form.cleaned_data.get('username')
+            messages.success(request, f'Account has been created for {user_name}')
             user.username = user.username.lower()
             user.save()
             return redirect('Login')

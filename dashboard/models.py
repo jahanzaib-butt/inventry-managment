@@ -15,9 +15,10 @@ class Product(models.Model):
         return f'{self.name}-{self.quantity}'
 class Order(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE,null = True)
-    staff =models.ForeignKey(User,on_delete=models.CASCADE,null = True)
+    staff = models.ForeignKey(User,on_delete=models.CASCADE,null = True)
     order_quantity = models.PositiveBigIntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.product} ordered by "{self.staff.username}"'
+        staff_username = self.staff.username if self.staff else "Unknown"
+        return f'{self.product} ordered by "{staff_username}"'
