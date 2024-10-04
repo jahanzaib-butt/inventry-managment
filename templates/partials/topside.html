@@ -1,57 +1,94 @@
 <div class="container">
     <div class="row">
+        <!-- Information Card -->
         <div class="col-md-4 mt-4">
-        <div class="card">
-            <div class="card-header bg-info text-white">
-                Information
-            </div>
-            <div class="card-body">
-                <marquee behavior="" direction="">
-                    <h3 class="my-4">New Information</h3>
-                </marquee>
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Information
+                </div>
+                <div class="card-body">
+                    <marquee behavior="" direction="">
+                        <h3 class="my-4 text-danger">New Information</h3>
+                    </marquee>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-8 mt-4">
-        <div class="card">
-            <div class="card-header bg-info text-white">
-                Dashboard Statistics
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <a class="text-decoration-none text-dark" href="{% url 'dashboard-staff' %}">
-                            <div class="card my-card shadow">
-                                <div class="card-body text-center">
-                                    <h4>Staff <i class="fas fa-users"></i></h4>
-                                    <h3>{{ staff_count }}</h3>
+
+        <!-- Dashboard Statistics -->
+        <div class="col-md-8 mt-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Dashboard Statistics
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="text-decoration-none" href="{% url 'dashboard-staff' %}">
+                                <div class="card my-card shadow" style="background-color: #0f3460; transition: background-color 0.3s ease;">
+                                    <div class="card-body text-center text-white">
+                                        <h4>Staff <i class="fas fa-users text-danger"></i></h4>
+                                        <h3>{{ staff_count }}</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="text-decoration-none text-dark" href="{% url 'dashboard-product' %}">
-                            <div class="card my-card shadow">
-                                <div class="card-body text-center">
-                                    <h4>Products <i class="fas fa-box"></i></h4>
-                                    <h3>{{ product_count }}</h3>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="text-decoration-none" href="{% url 'dashboard-product' %}">
+                                <div class="card my-card shadow" style="background-color: #0f3460; transition: background-color 0.3s ease;">
+                                    <div class="card-body text-center text-white">
+                                        <h4>Products <i class="fas fa-box text-danger"></i></h4>
+                                        <h3>{{ product_count }}</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a class="text-decoration-none text-dark" href="{% url 'dashboard-order' %}">
-                            <div class="card my-card shadow">
-                                <div class="card-body text-center">
-                                    <h4>Orders <i class="fas fa-shipping-fast"></i></h4>
-                                    <h3>{{ orders_count }}</h3>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="text-decoration-none" href="{% url 'dashboard-order' %}">
+                                <div class="card my-card shadow" style="background-color: #0f3460; transition: background-color 0.3s ease;">
+                                    <div class="card-body text-center text-white">
+                                        <h4>Orders <i class="fas fa-shipping-fast text-danger"></i></h4>
+                                        <h3>{{ orders_count }}</h3>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </div>
+
+<style>
+    /* Card Styling based on Navbar Design */
+    .card {
+        background-color: #0f3460;
+        color: #e0e0e0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .card-header {
+        background-color: #e94560;
+        color: white;
+        font-weight: bold;
+    }
+
+    .card-body h4 {
+        font-size: 1.5rem;
+        color: #e0e0e0;
+    }
+
+    .card-body h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #e94560;
+    }
+
+    .card:hover {
+        background-color: #162447;
+    }
+
+    .text-danger {
+        color: #e94560 !important;
+    }
+</style>

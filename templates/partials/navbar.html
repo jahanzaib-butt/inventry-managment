@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-info bg-info">
-    <div class="container">
-        <a class="navbar-brand text-white" href="{% url 'dashboard-index' %}">Inventory Managment</a>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'dashboard-index' %}">
+            <i class="fas fa-boxes mr-2"></i>Inventory Management
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,32 +11,69 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="{% url 'dashboard-index' %}">Dashboard <span
-                            class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'dashboard-index' %}">
+                        <i class="fas fa-chart-line mr-1"></i>Dashboard
+                    </a>
                 </li>
+                <!-- Additional menu items can be added here -->
             </ul>
+
             {% if user.is_authenticated %}
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="{% url 'profile' %}">{{ user.username }} Profile
-                        <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">
+                        <i class="fas fa-user mr-1"></i>{{ user.username }} Profile
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'Logout' %}">Logout</a>
+                    <a class="nav-link" href="{% url 'Logout' %}">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                    </a>
                 </li>
             </ul>
             {% else %}
-
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="{% url 'register' %}"> Register
-                        <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">
+                        <i class="fas fa-user-plus mr-1"></i>Register
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'Login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'Login' %}">
+                        <i class="fas fa-sign-in-alt mr-1"></i>Login
+                    </a>
                 </li>
             </ul>
             {% endif %}
         </div>
     </div>
 </nav>
+
+<style>
+    .navbar {
+        background-color: #0f3460;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+        color: #e94560 !important;
+    }
+
+    .nav-link {
+        color: #e0e0e0 !important;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #e94560 !important;
+    }
+
+    .navbar-toggler {
+        border-color: #e0e0e0;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(224, 224, 224, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+</style>

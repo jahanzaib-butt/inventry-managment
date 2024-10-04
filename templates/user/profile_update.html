@@ -1,24 +1,68 @@
 {% extends 'partials/base.html' %}
+
 {% block title %} Profile Update {% endblock %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <div class="card">
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col-md-6">
+            <div class="card bg-dark text-white">
                 <div class="card-header">
-                    <h3>Update Profile</h3>
+                    <h2 class="text-center mb-4">Update Profile</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data">    
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .btn {
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0069d9;
+        }
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
 {% endblock %}

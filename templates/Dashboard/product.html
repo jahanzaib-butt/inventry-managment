@@ -1,65 +1,211 @@
 {% extends 'partials/base.html' %}
-{% block title %} product page {% endblock %}  
+{% block title %}Product Management{% endblock %}
 {% load crispy_forms_tags %}
+
 {% block content %}
 {% include 'partials/topside.html' %}
-    <!--Table-->
 
-   
-    <div class="container">
-        <div class="row my-4">
-            <div class="col-md-4">
-                {% if messages %}
-                    <div class="alert alert-success" role="alert">
-                        {% for message in messages %}
-                            {{ message }}
-                        {% endfor %}
+<div class="container-fluid px-4 py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="text-white mb-0">Product Management</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 bg-dark">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard-index' %}" class="text-white">Dashboard</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Products</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-check-circle me-2"></i>
+                        {{ message }}
                     </div>
-                        {% endif %}
-                <div class="border bg-white p-3">
-                    <h4>Add Products</h4>
-                    <hr>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <div class="card bg-dark border-0 shadow mb-4">
+                <div class="card-header bg-dark border-bottom border-secondary">
+                    <h5 class="card-title mb-0 text-white">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Product
+                    </h5>
+                </div>
+                <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy }}
-
-                        <input class="btn btn-success btn-block" type="submit" value="Add Product">
-
+                        <button type="submit" class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-save me-2"></i>Save Product
+                        </button>
                     </form>
                 </div>
             </div>
-            <div class="col-md-8">
-                <table class="table bg-white">
-                    <thead class="bg-info">
-                        <tr class="text-white">
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Activity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for product in products %}
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.quantity }}</td>
-                            <td>
-                                <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' product.id %}">Edit</a>
-                                <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' product.id %}">Delete</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
         </div>
 
+        <div class="col-md-8">
+            <div class="card bg-dark border-0 shadow">
+                <div class="card-header bg-dark border-bottom border-secondary">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0 text-white">
+                            <i class="fas fa-box me-2"></i>Product List
+                        </h5>
+                        <!-- <div class="input-group w-auto">
+                            <input type="text" class="form-control form-control-sm bg-darker border-secondary text-white" 
+                                   placeholder="Search products...">
+                            <button class="btn btn-outline-secondary btn-sm" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="60">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col" width="140">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ product.name }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">{{ product.category }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {% if product.quantity > 10 %}bg-success{% elif product.quantity > 0 %}bg-warning{% else %}bg-danger{% endif %}">
+                                            {{ product.quantity }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dashboard-product-update' product.id %}" 
+                                           class="btn btn-info btn-sm">
+
+                                            <i class="fas fa-edit">Update</i>
+                                        </a><hr>
+                                        
+                                        <a href="{% url 'dashboard-product-delete' product.id %}" 
+                                           class="btn btn-danger btn-sm ms-1">
+                                            <i class="fas fa-trash">Delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-
-
-    <!--End Table-->
+<style>
+    body {
+        background-color: #1a1d2b;
+        color: #ffffff;
+    }
+    
+    .card {
+        background-color: #16213e;
+        border-radius: 10px;
+    }
+    
+    .bg-darker {
+        background-color: #1a1d2b !important;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        border-bottom: 2px solid #2d3246;
+        color: #8a94a6;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+    }
+    
+    .table td, .table th {
+        padding: 1rem;
+        border-top: 1px solid #2d3246;
+        vertical-align: middle;
+    }
+    
+    .badge {
+        padding: 0.5em 0.8em;
+        font-weight: 500;
+    }
+    
+    .form-control {
+        border-color: #2d3246;
+    }
+    
+    .form-control:focus {
+        background-color: #1a1d2b;
+        border-color: #4361ee;
+        box-shadow: none;
+        color: white;
+    }
+    
+    .btn-primary {
+        background-color: #4361ee;
+        border-color: #4361ee;
+    }
+    
+    .btn-info {
+        background-color: #3498db;
+        border-color: #3498db;
+        color: white;
+    }
+    
+    .btn-danger {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+    }
+    
+    .alert-success {
+        background-color: rgba(46, 204, 113, 0.2);
+        border-color: #2ecc71;
+        color: #ffffff;
+    }
+    
+    /* Crispy forms styling */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    label {
+        color: #8a94a6;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+        background-color: #1a1d2b;
+        border: 1px solid #2d3246;
+        color: white;
+    }
+    
+    .form-control::placeholder {
+        color: #6c757d;
+    }
+</style>
 {% endblock %}
